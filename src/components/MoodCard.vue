@@ -53,10 +53,10 @@ defineProps<{ mood: Mood }>()
 
 			<!-- save button -->
 			<Button
-				type="submit"
+				type="button"
 				class="mt-3 h-9 w-full rounded-xl text-[13px] font-semibold tracking-wide transition-all duration-500"
 				:class="mood.colors.btn"
-				@click="saveMood(mood)"
+				@click.prevent="saveMood(mood)"
 			>
 				Save Mood
 			</Button>

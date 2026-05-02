@@ -145,6 +145,7 @@ function clamp(v: number) {
 }
 
 export function onPointerDown(e: PointerEvent) {
+	e.preventDefault()
 	sound.tick()
 	dragging = true
 	velocity = { x: 0, y: 0 }
@@ -154,6 +155,7 @@ export function onPointerDown(e: PointerEvent) {
 }
 
 export function onPointerMove(e: PointerEvent) {
+	e.preventDefault()
 
 	if (!dragging || !container.value) return
 

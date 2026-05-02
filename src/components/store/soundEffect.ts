@@ -1,3 +1,5 @@
+import { isMuted } from './useStore'
+
 let audioCtx: AudioContext | null = null
 
 export function getAudioContext() {
@@ -6,9 +8,10 @@ export function getAudioContext() {
 }
 
 export const sound = {
-	tick: () => playTone(600, 0.05),
-	ding: () => playTone(800, 0.3),
+	tick: () => !isMuted.value && playTone(600, 0.05),
+	ding: () => !isMuted.value && playTone(800, 0.3),
 	chime: () => {
+		if (isMuted.value) return
 		playTone(600, 0.2)
 		setTimeout(() => playTone(900, 0.3), 150)
 	}

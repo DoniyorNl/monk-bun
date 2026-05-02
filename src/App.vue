@@ -2,9 +2,9 @@
 import MoodBox from '@/components/MoodBox.vue'
 import MoodCard from '@/components/MoodCard.vue'
 import MoodHistory from '@/components/MoodHistory.vue'
-import { activeMood, isDark, streak, toggleDark } from '@/components/store/useStore'
+import { activeMood, isDark, isMuted, streak, toggleDark, toggleMute } from '@/components/store/useStore'
 import { Button } from '@/components/ui/button'
-import { History, Moon, Sun, X } from 'lucide-vue-next'
+import { History, Moon, Sun, Volume2, VolumeX, X } from 'lucide-vue-next'
 import { ref } from 'vue'
 
 const showHistory = ref(false)
@@ -21,9 +21,16 @@ const showHistory = ref(false)
 			>
 			<span
 				class="text-[11px] font-semibold tracking-[0.2em] text-gray-400 dark:text-gray-500 uppercase"
-				>🔥 {{ streak.streak }} 🔥 Fiery days</span
+				>🔥{{ streak.streak }} 🔥 Fiery days</span
 			>
-			<div class="flex flex-1 items-center gap-2 justify-end">
+			<div class="flex flex-1 items-center gap-1 justify-end">
+				<button
+					class="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 dark:text-gray-500 hover:bg-black/5 dark:hover:bg-white/8 transition-colors duration-200"
+					@click="toggleMute"
+				>
+					<VolumeX v-if="isMuted" class="size-3.5" />
+					<Volume2 v-else class="size-3.5" />
+				</button>
 				<button
 					class="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 dark:text-gray-500 hover:bg-black/5 dark:hover:bg-white/8 transition-colors duration-200"
 					@click="toggleDark"

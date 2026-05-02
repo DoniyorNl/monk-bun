@@ -111,7 +111,6 @@ export function saveMood(mood: Mood) {
 	if (moodHistory.value.length > 20) {
 		moodHistory.value = moodHistory.value.slice(0, 20)
 	}
-	console.log("streak", streak.value)
 	localStorage.setItem('moodHistory', JSON.stringify(moodHistory.value))
 	updateStreak()
 }
@@ -146,6 +145,7 @@ function clamp(v: number) {
 }
 
 export function onPointerDown(e: PointerEvent) {
+	sound.tick()
 	dragging = true
 	velocity = { x: 0, y: 0 }
 	last = { x: e.clientX, y: e.clientY }
@@ -154,7 +154,7 @@ export function onPointerDown(e: PointerEvent) {
 }
 
 export function onPointerMove(e: PointerEvent) {
-	haptic.drag()
+
 	if (!dragging || !container.value) return
 
 	const rect = container.value.getBoundingClientRect()
@@ -208,6 +208,15 @@ export function toggleDark() {
 	localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
 }
 
+// ─── Mute ───────────────────────────────────────────────────────
+
+export const isMuted = ref(localStorage.getItem('muted') === 'true')
+
+export function toggleMute() {
+	isMuted.value = !isMuted.value
+	localStorage.setItem('muted', String(isMuted.value))
+}
+
 // ─── Streak ─────────────────────────────────────────────────────
 
 export const streak = ref(
@@ -223,7 +232,6 @@ export function updateStreak() {
 	streak.value.lastCheckIn = today
 	localStorage.setItem('streak', JSON.stringify(streak.value))
 	sound.ding()
-	// haptic.streak()
 }
 
 // ─── Haptic ─────────────────────────────────────────

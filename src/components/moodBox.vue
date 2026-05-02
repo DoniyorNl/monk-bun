@@ -1,70 +1,61 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { onPointerDown, onPointerMove, onPointerUp, pos, container } from './store/useStore'
+import type { ComponentPublicInstance } from 'vue'
+import { container, onPointerDown, onPointerMove, onPointerUp, pos } from './store/useStore'
 
-const containerEl = ref<HTMLElement | null>(null)
-
-onMounted(() => {
-	container.value = containerEl.value
-})
+function setContainer(el: Element | ComponentPublicInstance | null) {
+	if (el instanceof HTMLElement) container.value = el
+}
 </script>
 
 <template>
-	<div class="flex justify-center items-center bg-amber-50 rounded-3xl">
+	<div class="rounded-[28px] bg-white p-2 shadow-[0_2px_24px_rgba(0,0,0,0.08)] ring-1 ring-black/5">
 		<div
-			ref="containerEl"
-			class="relative w-[320px] h-[320px] rounded-3xl overflow-hidden shadow-lg select-none"
+			:ref="setContainer"
+			class="relative h-[300px] w-[300px] overflow-hidden rounded-[20px] select-none"
 			@pointermove="onPointerMove"
 			@pointerup="onPointerUp"
 			@pointerleave="onPointerUp"
 		>
-			<div class="grid grid-cols-2 grid-rows-2 w-full h-full rounded-xl overflow-hidden shadow-lg">
+			<!-- quadrant grid -->
+			<div class="grid h-full w-full grid-cols-2 grid-rows-2">
 				<div
-					class="flex items-center justify-center"
-					style="background: radial-gradient(circle at bottom right, #f3e8ff 0%, #9333ea 120%)"
+					class="relative flex items-start justify-start p-3"
+					style="background: radial-gradient(circle at bottom right, #ede9fe 0%, #c4b5fd 100%)"
 				>
-					<span class="bg-white/80 px-3 py-1 rounded-md text-sm font-medium text-gray-800 shadow-sm"
-						>Anxious</span
-					>
+					<span class="text-[11px] font-semibold tracking-wide text-violet-600/80">Anxious</span>
 				</div>
 
 				<div
-					class="flex items-center justify-center"
-					style="background: radial-gradient(circle at bottom left, #ffedd5 0%, #ea580c 120%)"
+					class="relative flex items-start justify-end p-3"
+					style="background: radial-gradient(circle at bottom left, #dcfce7 0%, #4ade80 100%)"
 				>
-					<span class="bg-white/80 px-3 py-1 rounded-md text-sm font-medium text-gray-800 shadow-sm"
-						>Excited</span
-					>
+					<span class="text-[11px] font-semibold tracking-wide text-emerald-600/80">Excited</span>
 				</div>
 
 				<div
-					class="flex items-center justify-center"
-					style="background: radial-gradient(circle at top right, #fee2e2 0%, #dc2626 120%)"
+					class="relative flex items-end justify-start p-3"
+					style="background: radial-gradient(circle at top right, #fee2e2 0%, #fca5a5 100%)"
 				>
-					<span class="bg-white/80 px-3 py-1 rounded-md text-sm font-medium text-gray-800 shadow-sm"
-						>Sad</span
-					>
+					<span class="text-[11px] font-semibold tracking-wide text-red-500/80">Sad</span>
 				</div>
 
 				<div
-					class="flex items-center justify-center"
-					style="background: radial-gradient(circle at top left, #fefce8 0%, #ca8a04 120%)"
+					class="relative flex items-end justify-end p-3"
+					style="background: radial-gradient(circle at top left, #fef9c3 0%, #fde68a 100%)"
 				>
-					<span class="bg-white/80 px-3 py-1 rounded-md text-sm font-medium text-gray-800 shadow-sm"
-						>Calm</span
-					>
+					<span class="text-[11px] font-semibold tracking-wide text-amber-600/80">Calm</span>
 				</div>
 			</div>
 
-			<!-- CROSS -->
-			<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-				<div class="w-full h-[1px] bg-white/50"></div>
-				<div class="absolute h-full w-[1px] bg-white/50"></div>
+			<!-- axis lines -->
+			<div class="pointer-events-none absolute inset-0">
+				<div class="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-white/60"></div>
+				<div class="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 bg-white/60"></div>
 			</div>
 
-			<!-- DRAG KNOB -->
+			<!-- drag knob -->
 			<div
-				class="absolute w-6 h-6 bg-white border-4 border-purple-500 rounded-full shadow-md cursor-pointer transition-transform duration-150 hover:scale-125 active:scale-110"
+				class="absolute h-5 w-5 cursor-grab rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.25)] ring-2 ring-black/20 transition-transform duration-100 active:cursor-grabbing active:scale-110"
 				:style="{
 					left: pos.x + '%',
 					top: pos.y + '%',

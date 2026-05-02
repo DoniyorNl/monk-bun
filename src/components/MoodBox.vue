@@ -12,6 +12,7 @@ function setContainer(el: Element | ComponentPublicInstance | null) {
 		<div
 			:ref="setContainer"
 			class="relative h-[300px] w-[300px] overflow-hidden rounded-[20px] select-none"
+			style="touch-action: none"
 			@pointermove="onPointerMove"
 			@pointerup="onPointerUp"
 			@pointerleave="onPointerUp"

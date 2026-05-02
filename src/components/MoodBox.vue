@@ -11,8 +11,7 @@ function setContainer(el: Element | ComponentPublicInstance | null) {
 	<div class="rounded-[28px] bg-white dark:bg-[#26263d84] p-2 shadow-[0_2px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_2px_24px_rgba(0,0,0,0.5)] ring-1 ring-black/5 dark:ring-white/8 transition-colors duration-300">
 		<div
 			:ref="setContainer"
-			class="relative h-[300px] w-[300px] overflow-hidden rounded-[20px] select-none"
-			style="touch-action: none"
+			class="relative h-[300px] w-[300px] overflow-hidden rounded-[20px] select-none touch-none"
 			@pointermove="onPointerMove"
 			@pointerup="onPointerUp"
 			@pointerleave="onPointerUp"

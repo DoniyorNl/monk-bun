@@ -1,4 +1,5 @@
 <script setup>
+import Button from './ui/button/Button.vue'
 
 defineProps({
 	mood: {
@@ -20,5 +21,6 @@ defineProps({
 				<span class="mood-tag">{{ mood.valence }}</span>
 			</div>
 		</div>
+		<Button variant="outline" type="submit"> Save Mood </Button>
 	</div>
 </template>

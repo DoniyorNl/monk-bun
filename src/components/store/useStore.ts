@@ -96,6 +96,7 @@ export const moodHistory = ref<MoodEntry[]>(
 )
 
 export function saveMood(mood: Mood) {
+	haptic.save()
 	const entry: MoodEntry = {
 		key: mood.key,
 		name: mood.name,
@@ -108,7 +109,9 @@ export function saveMood(mood: Mood) {
 	if (moodHistory.value.length > 20) {
 		moodHistory.value = moodHistory.value.slice(0, 20)
 	}
+	console.log("streak", streak.value)
 	localStorage.setItem('moodHistory', JSON.stringify(moodHistory.value))
+	updateStreak()
 }
 
 // ─── Position & Drag ────────────────────────────────────────────
@@ -149,6 +152,7 @@ export function onPointerDown(e: PointerEvent) {
 }
 
 export function onPointerMove(e: PointerEvent) {
+	haptic.drag()
 	if (!dragging || !container.value) return
 
 	const rect = container.value.getBoundingClientRect()
@@ -188,4 +192,42 @@ export function startInertia() {
 	}
 
 	frame = requestAnimationFrame(animate)
+}
+
+// ─── Dark Mode ──────────────────────────────────────────────────
+
+export const isDark = ref(localStorage.getItem('theme') === 'dark')
+document.documentElement.classList.toggle('dark', isDark.value)
+
+export function toggleDark() {
+	isDark.value = !isDark.value
+	document.documentElement.classList.toggle('dark', isDark.value)
+	localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+}
+
+// ─── Streak ─────────────────────────────────────────────────────
+
+export const streak = ref(
+	JSON.parse(localStorage.getItem('streak') || '{"streak": 0, "lastCheckIn": ""}')
+)
+export function updateStreak() {
+	const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+	const today = new Date().toISOString().split('T')[0]
+
+	if (streak.value.lastCheckIn === today) return
+	streak.value.streak = streak.value.lastCheckIn === yesterday ? streak.value.streak + 1 : 1
+	streak.value.lastCheckIn = today
+	localStorage.setItem('streak', JSON.stringify(streak.value))
+}
+
+// ─── Haptic ─────────────────────────────────────────
+
+function vibrate(pattern: number | number[]) {
+	if (navigator.vibrate) navigator.vibrate(pattern)
+}
+
+export const haptic = {
+	drag: () => vibrate(5),
+	save: () => vibrate(15),
+	streak: () => vibrate([10, 50, 10]),
 }

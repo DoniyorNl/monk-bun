@@ -8,7 +8,7 @@ function setContainer(el: Element | ComponentPublicInstance | null) {
 </script>
 
 <template>
-	<div class="rounded-[28px] bg-white p-2 shadow-[0_2px_24px_rgba(0,0,0,0.08)] ring-1 ring-black/5">
+	<div class="rounded-[28px] bg-white dark:bg-[#26263d84] p-2 shadow-[0_2px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_2px_24px_rgba(0,0,0,0.5)] ring-1 ring-black/5 dark:ring-white/8 transition-colors duration-300">
 		<div
 			:ref="setContainer"
 			class="relative h-[300px] w-[300px] overflow-hidden rounded-[20px] select-none"
@@ -55,7 +55,7 @@ function setContainer(el: Element | ComponentPublicInstance | null) {
 
 			<!-- drag knob -->
 			<div
-				class="absolute h-5 w-5 cursor-grab rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,0.25)] ring-2 ring-black/20 transition-transform duration-100 active:cursor-grabbing active:scale-110"
+				class="absolute h-5 w-5 cursor-grab rounded-full bg-white dark:bg-[#e2e2f0] shadow-[0_2px_8px_rgba(0,0,0,0.25)] ring-2 ring-black/20 dark:ring-white/20 transition-transform duration-100 active:cursor-grabbing active:scale-110"
 				:style="{
 					left: pos.x + '%',
 					top: pos.y + '%',

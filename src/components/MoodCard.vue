@@ -7,7 +7,7 @@ defineProps<{ mood: Mood }>()
 
 <template>
 	<div
-		class="w-[304px] overflow-hidden rounded-[24px] bg-white shadow-[0_2px_24px_rgba(0,0,0,0.08)] ring-1 ring-black/5 transition-all duration-500"
+		class="w-[316px] overflow-hidden rounded-[24px] bg-white dark:bg-[#282843] shadow-[0_2px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_2px_24px_rgba(0,0,0,0.4)] ring-1 ring-black/3 dark:ring-white/8 transition-all duration-500"
 	>
 		<!-- colored top bar -->
 		<div class="h-1 w-full transition-colors duration-500" :class="mood.colors.bar" />
@@ -23,7 +23,7 @@ defineProps<{ mood: Mood }>()
 				</div>
 
 				<div>
-					<p class="text-[10px] font-semibold tracking-[0.18em] text-gray-400 uppercase">
+					<p class="text-[10px] font-semibold tracking-[0.18em] text-gray-400 dark:text-gray-500 uppercase">
 						I'm feeling
 					</p>
 					<p

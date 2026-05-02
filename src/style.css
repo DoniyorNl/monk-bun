@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
 	--sans: system-ui, 'Segoe UI', Roboto, sans-serif;
 	font-family: var(--sans);
@@ -8,7 +10,7 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
-	color-scheme: light;
+	color-scheme: light dark;
 }
 
 *,

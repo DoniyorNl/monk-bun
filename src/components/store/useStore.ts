@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import { sound } from './soundEffect'
 
 export interface MoodColors {
 	accent: string
@@ -97,6 +98,7 @@ export const moodHistory = ref<MoodEntry[]>(
 
 export function saveMood(mood: Mood) {
 	haptic.save()
+	sound.ding()
 	const entry: MoodEntry = {
 		key: mood.key,
 		name: mood.name,
@@ -167,6 +169,7 @@ export function onPointerMove(e: PointerEvent) {
 }
 
 export function onPointerUp(e: PointerEvent) {
+	sound.tick()
 	if (!dragging) return
 	dragging = false
 		; (e.target as HTMLElement).releasePointerCapture(e.pointerId)
@@ -215,9 +218,12 @@ export function updateStreak() {
 	const today = new Date().toISOString().split('T')[0]
 
 	if (streak.value.lastCheckIn === today) return
+	sound.chime()
 	streak.value.streak = streak.value.lastCheckIn === yesterday ? streak.value.streak + 1 : 1
 	streak.value.lastCheckIn = today
 	localStorage.setItem('streak', JSON.stringify(streak.value))
+	sound.ding()
+	// haptic.streak()
 }
 
 // ─── Haptic ─────────────────────────────────────────
